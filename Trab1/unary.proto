@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+package unary;
+
+service Unary{
+    rpc DemandResponse(Message) returns (MessageResponse) {}
+    rpc DemandClientInsertion (Client) returns (Confirmation) {}
+    rpc DemandClientModification (Client) returns (Confirmation) {}
+    rpc DemandClientSearch (CID) returns (Confirmation) {}
+    rpc DemandClientRemoval (CID) returns (Confirmation) {}
+    rpc DemandProductInsertion (Product) returns (Confirmation) {}
+    rpc DemandProductModification (Product) returns (Confirmation) {}
+    rpc DemandProductSearch (PID) returns (Confirmation) {}
+    rpc DemandProductRemoval (PID) returns (Confirmation) {}
+    
+    rpc DemandProductList(CID) returns (ProductList) {}
+    rpc DemandOrderInsertion(Order) returns (OID) {}
+    rpc DemandOrderModification (ModOrder) returns (Confirmation) {}
+    rpc DemandOrderList (CID) returns (OrderList) {}
+    rpc DemandOrderInformation (CID_OID) returns (Order) {}
+    rpc DemandOrderPrice (OID) returns (Price) {}
+    rpc DemandOrderCancelation (CID_OID) returns (Confirmation) {}
+}
+
+message Confirmation{
+    bool b = 1;
+}
+
+message Price{
+    float price = 1;
+}
+
+message CID_OID{
+    string cid = 1;
+    string oid = 2;
+}
+
+message CID {
+    string cid = 1;
+}
+
+message OID {
+    string oid = 1;
+}
+
+message PID {
+    string pid = 1;
+}
+
+message Product{
+    string CB = 1;
+    string name = 2;
+    float price = 3;
+    int32 stock = 4;
+}
+
+message ProductList{
+    repeated Product PL = 1;
+}
+
+message Message{
+    string message = 1;
+}
+   
+message MessageResponse{
+    repeated int32 a = 1;
+}
+
+message Client{
+    string name = 1;
+    string surname = 2;
+    string cpf = 3;
+}
+
+message IndOrder{
+    string pid = 1;
+    int32 qtd = 2;
+}
+
+message Order{
+    string cid = 1;
+    repeated IndOrder products = 2;
+}
+
+message ModOrder{
+    string cid = 1;
+    string oid = 2;
+    repeated IndOrder products = 3;
+}
+
+message OrderList{
+    repeated string orList = 1;
+}
